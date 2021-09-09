@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Identify small open reading frames">
+
+    <title>Small Exons Finder</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
+          integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" href="styles/main.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/yui/3.18.1/yui/yui-min.js"
+            integrity="sha384-GpB9QZj41WDG9CJ8Z5AJRdH1VYwkLK2PPKC1FR6AMCOcZhTVkIe3J2ASTGnAUX+W"
+            crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="hd" class="page-header">
+      <div class="pure-g">
+        <div class="pure-u-1-2">
+          <div class="logo-container">
+            <img src="images/GEP_logo.png" alt="GEP Logo" class="logo"/>
+            <div class="title">Small Exons Finder</div>
+          </div>
+        </div>
+        <div class="pure-u-1-2">
+          <div class="release">Prototype</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="bd">
+      <div id="messagePanel" class="hidden">
+        <div id="messagePanel-content" class="message">
+          <i id="messagePanel-icon"></i>
+          <span id="messagePanel-message"></span>
+        </div>
+      </div>
+
+      <form id="searchForm" method="POST" action=""
+            class="pure-form pure-form-aligned" novalidate>
+        <fieldset>
+          <legend>Search for small coding exons based on the following criteria:</legend>
+
+          <div class="pure-control-group">
+            <label for="sequenceFile">Sequence file</label>
+            <span id="sequenceFile-wrapper">
+              <input type="file" name="sequenceFile" id="sequenceFile" required>
+            </span>
+          </div>
+
+          <div class="pure-control-group">
+            <label for="type">Coding Exon Type</label>
+            <select class="pure-input-1-3" name="type" id="type">
+              <option value="initial">Initial Exon (with start codon)</option>
+              <option value="internal">Internal Exon</option>
+              <option value="terminal">Terminal Exon (with stop codon)</option>
+            </select>
+          </div>
+
+          <div class="pure-control-group">
+            <label for="start">Start Position</label>
+            <input class="pure-input-1-3" name="start" id="start" required
+              type="number" min="1" step="1" placeholder="Position to begin search">
+          </div>
+
+          <div class="pure-control-group">
+            <label for="end">End Position</label>
+            <input class="pure-input-1-3" name="end" id="end" required
+              type="number" min="1" step="1" placeholder="Position to end search">
+          </div>
+
+          <div class="pure-control-group">
+            <label for="strand">Strand</label>
+            <select class="pure-input-1-3" name="strand" id="strand">
+              <option value="plus">Plus</option>
+              <option value="minus">Minus</option>
+            </select>
+          </div>
+
+          <div class="pure-control-group">
+            <label for="cdsSize">CDS Size (aa)</label>
+            <input class="pure-input-1-3" name="cdsSize" id="cdsSize" required
+              type="number" min="1" step="1"
+              placeholder="Expected size of CDS">
+          </div>
+
+          <div id="donorSite-options" class="pure-control-group">
+            <label for="donorSite">Donor Site</label>
+            <select class="pure-input-1-3" name="donorSite" id="donorSite">
+              <option value="GT">GT</option>
+              <option value="GC">GC</option>
+            </select>
+          </div>
+
+          <div id="acceptorPhases-options" class="pure-control-group hidden">
+            <label for="acceptorPhases">Acceptor Phase</label>
+            <select class="pure-input-1-3" name="acceptorPhases" id="acceptorPhases">
+              <option value="any">Any</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+
+          <div id="donorPhases-options" class="pure-control-group">
+            <label for="donorPhases">Donor Phase</label>
+            <select class="pure-input-1-3" name="donorPhases" id="donorPhases">
+              <option value="any">Any</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+
+          <div class="pure-controls">
+            <button type="submit" class="pure-button pure-button-primary">Find Small Exons</button>
+            <input type='reset' class="pure-button" value='Reset' name='reset'>
+          </div>
+        </fieldset>
+      </form>
+
+      <div id="matchesPanel" class="resultsSection hidden"></div>
+    </div>
+
+    <div id='ft' class="page-footer">
+      | <a href="https://thegep.org">GEP Home Page</a> |
+      <a href="https://community.gep.wustl.edu/repository/documentations/Small_Exons_Finder_User_Guide.pdf">User Guide</a> |
+    </div>
+
+    <script id="matchesTable-template" type="text/x-handlebars-template">
+      <table class="pure-table pure-table-striped matchesTable">
+        <thead>
+          <tr>
+            <th>Start</th><th>End</th><th>Translation</th>
+            <th>Acceptor Phase</th><th>Donor Phase</th><th>Sequence</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </script>
+
+    <script id="matchesTable-row-template" type="text/x-handlebars-template">
+      <tr>
+        <td>{spanStart}</td><td>{spanEnd}</td><td class="sequence">{translation}</td>
+        <td>{acceptorPhase}</td><td>{donorPhase}</td><td class="sequence">{sequence}</td>
+      </tr>
+    </script>
+
+    <script src='js/smallexonfinder-main-v1.min.js'></script>
+  </body>
+</html>

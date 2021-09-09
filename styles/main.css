@@ -1,0 +1,161 @@
+html, button, input, select,
+.pure-g [class*="pure-u"],
+.yui3-skin-sam #bd .yui3-datatable-table {
+  font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", sans-serif;
+  font-size: 93%;
+}
+
+input:focus, textarea:focus {
+  background: #FFEFD5;
+}
+
+body {
+  margin: auto;
+  max-width: 960px;
+}
+
+.hidden {
+  display: none;
+}
+
+form {
+  background-color: white;
+  padding: 0.5em;
+}
+
+p {
+  padding: 0.2em;
+  margin: 0.5em 0 0 0;
+}
+
+#hd {
+  background-color: #990000;
+  font-size: 116%;
+  padding: 0.5em 1em;
+  color: #FFF;
+}
+
+#bd {
+	background-color: #ffffff;
+	padding: 1em;
+}
+
+#ft {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+	font-size: 116%;
+	text-align: center;
+	background-color: #990000;
+	color: #FFF;
+}
+
+#ft a {
+    color: #FFF;
+}
+
+.message {
+  border: 1px solid;
+  border-radius: 0.5em;
+  width: 70%;
+  margin: 0.5em auto;
+  text-align: left;
+  padding: 0.5em;
+  vertical-align: middle;
+}
+
+.error {
+  color: #A94442;
+  background-color: #F2DEDE;
+}
+
+.info {
+  color: #31708F;
+  background-color: #D9EDF7;
+}
+
+.warning {
+  color: #8A6D3B;
+  background-color: #FCF8E3;
+}
+
+.success {
+  color: #3C763D;
+  background-color: #DFF0D8;
+}
+
+.wait {
+  color: #000;
+  background-color: #FFF;
+}
+
+.message i.fa {
+  padding-right: 0.2em;
+  vertical-align: middle;
+}
+
+table.matchesTable tr td.sequence {
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+}
+
+input:focus:required:invalid {
+  border-color: #900;
+  background-color: #FFD9D9;
+}
+
+input:focus:required:valid {
+  border-color: #090;
+  background-color: #D9FFD9;
+}
+
+.resultsSection {
+  background-color: white;
+  margin-top: 1em;
+  padding: 0.5em;
+}
+
+.resultsSection h2 {
+  font-size: 108%;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+}
+
+#bd table.matchesTable caption {
+  font-size: 100%;
+  font-weight: bold;
+}
+
+.flashButton {
+  display: inline-block;
+}
+
+span.flashButtonMessage  {
+  display: inline-block;
+  margin-left: 0.5em;
+}
+
+input[type=file]::-ms-value {
+  padding: 0.3em;
+}
+
+input[type=file]::-ms-browse {
+  padding: 0.3em;
+  margin-left: 0.3em;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  padding-right: 10px;
+}
+
+.release {
+  margin-top: 0.2em;
+  text-align: right;
+}
+
+.region-highlight {
+  color: #990000;
+}
